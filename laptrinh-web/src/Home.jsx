@@ -1,17 +1,20 @@
+import { useContext } from "react";
+import { ProductContext } from "./ProductContext";
+import { useCart } from "./CartContext";
+import Button from "./Button";
+import { Link } from "react-router-dom";
+import img1 from "./assets/avatar.jpg";
+// icon
 import { FaCartShopping } from "react-icons/fa6";
 import { IoMdPerson } from "react-icons/io";
-import img1 from "./assets/avatar.jpg";
-import { FaArrowRight } from "react-icons/fa";
 import { MdShoppingCart } from "react-icons/md";
-import Button from "./Button";
 import { PiStarFourBold } from "react-icons/pi";
-import { FaTruck } from "react-icons/fa";
 import { IoShieldCheckmarkSharp } from "react-icons/io5";
 import { BsHandbagFill } from "react-icons/bs";
-import { FaFacebook } from "react-icons/fa";
-import { FaInstagram } from "react-icons/fa";
-import { FaTwitter } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaTwitter, FaArrowRight, FaTruck } from "react-icons/fa";
 function Home() {
+  const { products } = useContext(ProductContext);
+  const { addToCart } = useCart();
   return (
     <>
       {/* nav */}
@@ -23,19 +26,36 @@ function Home() {
         {/* items */}
         <div>
           <ul className="flex gap-4 cursor-pointer">
-            <li>Trang chủ</li>
-            <li>Nam</li>
-            <li>Nữ</li>
-            <li>Phụ kiện</li>
-            <li>Sale</li>
+            <li>
+              {" "}
+              <Link to="/Home">Trang chủ</Link>
+            </li>
+            <li>
+              <Link to="/Product">Sản phẩm</Link>
+            </li>
+            <li>
+              <Link to="/Product">Nam</Link>
+            </li>
+            <li>
+              <Link to="/Product">Nữ</Link>
+            </li>
+            <li>
+              <Link to="/Product">Phụ kiện</Link>
+            </li>
+            <li>
+              <Link to="/Product">Sale</Link>
+            </li>
           </ul>
         </div>
         {/*  */}
         <div className="flex gap-4 cursor-pointer">
-          <FaCartShopping size={22} />
+          <Link to="/Cart">
+            <FaCartShopping size={22} />
+          </Link>
           <IoMdPerson size={22} />
         </div>
       </div>
+
       {/* introduce */}
       <div>
         <img
@@ -60,10 +80,12 @@ function Home() {
           </div>
         </div>
       </div>
+
       {/* body */}
       <div className="text-center p-5">
         <p className="text-2xl font-bold">Danh mục sản phẩm</p>
       </div>
+
       {/* item */}
       <div className="flex justify-center gap-10 py-5 max-w-300 mx-auto">
         <a
@@ -91,118 +113,33 @@ function Home() {
           <p className="text-2xl font-bold">Sản phẩm nổi bật</p>
         </div>
         <div className="max-w-300 mx-auto grid grid-cols-4 gap-5 ">
-          <div className="group relative">
-            <span class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-full z-10">
-              -25%
-            </span>
-            <img
-              src={img1}
-              alt=""
-              className="object-cover w-75 h-80 rounded-2xl"
-            />
-            <p className="font-bold my-1">Áo Thun Trắng</p>
-            <p className="font-bold">200.000đ</p>
-            {/* button add product */}
-            <div>
-              <Button
-                className={
-                  " bg-black text-white rounded-full flex items-center gap-2 text-sm absolute bottom-20 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                }
-              >
-                <MdShoppingCart size={35} /> Thêm vào giỏ
-              </Button>
-            </div>
-          </div>
-          <div className="group relative">
-            <span class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-full z-10">
-              -25%
-            </span>
-            <img
-              src={img1}
-              alt=""
-              className="object-cover w-75 h-80 rounded-2xl"
-            />
-            <p className="font-bold my-1">Áo Thun Trắng</p>
-            <p className="font-bold">200.000đ</p>
-            {/* button add product */}
-            <div>
-              <Button
-                className={
-                  " bg-black text-white rounded-full flex items-center gap-2 text-sm absolute bottom-20 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                }
-              >
-                <MdShoppingCart size={35} /> Thêm vào giỏ
-              </Button>
-            </div>
-          </div>
-          <div className="group relative">
-            <span class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-full z-10">
-              -25%
-            </span>
-            <img
-              src={img1}
-              alt=""
-              className="object-cover w-75 h-80 rounded-2xl"
-            />
-            <p className="font-bold my-1">Áo Thun Trắng</p>
-            <p className="font-bold">200.000đ</p>
-            {/* button add product */}
-            <div>
-              <Button
-                className={
-                  " bg-black text-white rounded-full flex items-center gap-2 text-sm absolute bottom-20 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                }
-              >
-                <MdShoppingCart size={35} /> Thêm vào giỏ
-              </Button>
-            </div>
-          </div>
-          <div className="group relative">
-            <span class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-full z-10">
-              -25%
-            </span>
-            <img
-              src={img1}
-              alt=""
-              className="object-cover w-75 h-80 rounded-2xl"
-            />
-            <p className="font-bold my-1">Áo Thun Trắng</p>
-            <p className="font-bold">200.000đ</p>
-            {/* button add product */}
-            <div>
-              <Button
-                className={
-                  " bg-black text-white rounded-full flex items-center gap-2 text-sm absolute bottom-20 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                }
-              >
-                <MdShoppingCart size={35} /> Thêm vào giỏ
-              </Button>
-            </div>
-          </div>
-          <div className="group relative">
-            <span class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-full z-10">
-              -25%
-            </span>
-            <img
-              src={img1}
-              alt=""
-              className="object-cover w-75 h-80 rounded-2xl"
-            />
-            <p className="font-bold my-1">Áo Thun Trắng</p>
-            <p className="font-bold">200.000đ</p>
-            {/* button add product */}
-            <div>
-              <Button
-                className={
-                  " bg-black text-white rounded-full flex items-center gap-2 text-sm absolute bottom-20 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                }
-              >
-                <MdShoppingCart size={35} /> Thêm vào giỏ
-              </Button>
-            </div>
+            {products.map((product) => (
+              <div key={product.id} className="group relative">
+                <span className="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-full">
+                  {product.discount ? product.discount : "Mới"}
+                </span>
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="object-cover w-75 h-80 rounded-2xl hover:scale-105 transition-transform duration-300"
+                />
+                <p className="font-bold my-1">{product.name}</p>
+                <p className="font-bold">{product.price}</p>
+                <div>
+                  <Button
+                    onClick={() => addToCart(product)}
+                    className={
+                      " bg-black text-white rounded-full flex items-center gap-2 text-sm absolute bottom-20 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    }
+                  >
+                    <MdShoppingCart size={35} /> Thêm vào giỏ
+                  </Button>
+                </div>
+              </div>
+            ))} ;
           </div>
         </div>
-      </div>
+
       {/* footer */}
       <div className="bg-orange-600 ">
         <div className="text-white flex items-center justify-center flex-col gap-3 p-5">
