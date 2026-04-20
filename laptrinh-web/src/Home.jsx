@@ -52,7 +52,7 @@ function Home() {
           <Link to="/Cart">
             <FaCartShopping size={22} />
           </Link>
-          <IoMdPerson size={22} />
+          <Link to="/Admin"><IoMdPerson size={22} /></Link>
         </div>
       </div>
 
