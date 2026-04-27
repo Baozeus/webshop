@@ -11,10 +11,13 @@ function Cart() {
   const shipping = 0;
   return (
     <>
+      {/* navbar */}
       <div className="flex items-center justify-between py-5 px-50 fixed top-0 left-0 right-0 bg-white z-10">
         {/* logo */}
         <div>
-          <img src="" alt="" />
+          <h1 className="text-2xl font-black tracking-widest uppercase mb-2">
+            FASHION
+          </h1>
         </div>
         {/* items */}
         <div>
@@ -64,7 +67,7 @@ function Cart() {
                 />
                 <div className="flex-1">
                   <h3 className="font-bold">{item.name}</h3>
-                  <p className="text-sm text-gray-400">Màu: Trắng | Size: S</p>
+                  
                   <div className="flex items-center gap-3 mt-2">
                     <button
                       onClick={() => updateQty(item.id, -1)}
@@ -97,7 +100,7 @@ function Cart() {
           </div>
 
           {/* CỘT PHẢI: TỔNG TIỀN */}
-          <div className="w-full lg:w-80 bg-gray-50 p-6 rounded-2xl h-fit">
+          <div className="w-80 bg-gray-50 p-6 rounded-2xl h-fit">
             <h2 className="font-bold mb-4">Tóm tắt đơn hàng</h2>
             <div className="space-y-2 text-sm border-b pb-4">
               <div className="flex justify-between">
@@ -114,44 +117,44 @@ function Cart() {
               <span>{(subtotal + shipping).toLocaleString()} đ</span>
             </div>
             <button className="w-full bg-black text-white py-3 rounded-full mt-6 font-bold">
-              Thanh toán
+              <Link to="/Payment">Thanh toán</Link>
             </button>
             <button className="w-full border py-3 rounded-full mt-2 text-sm font-medium">
-              Tiếp tục mua sắm
+              <Link to="/Home">Tiếp tục mua sắm</Link>
             </button>
           </div>
         </div>
       </div>
-      <footer class="bg-black text-white pt-16 pb-8">
-        <div class="max-w-7xl mx-auto px-4">
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+      <footer className="bg-black text-white pt-16 pb-8">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
             <div>
-              <h4 class="font-bold text-sm uppercase tracking-widest mb-6">
+              <h4 className="font-bold text-sm uppercase tracking-widest mb-6">
                 FASHION
               </h4>
-              <p class="text-gray-400 text-sm leading-relaxed max-w-xs">
+              <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
                 Shop thời trang uy tín hàng đầu Việt Nam. Chất lượng - Phong
                 cách - Giá tốt.
               </p>
             </div>
 
             <div>
-              <h4 class="font-bold text-sm uppercase tracking-widest mb-6">
+              <h4 className="font-bold text-sm uppercase tracking-widest mb-6">
                 Liên kết
               </h4>
-              <ul class="space-y-3 text-gray-400 text-sm">
+              <ul className="space-y-3 text-gray-400 text-sm">
                 <li>
-                  <a href="#" class="hover:text-white transition">
+                  <a href="#" className="hover:text-white transition">
                     Sản phẩm
                   </a>
                 </li>
                 <li>
-                  <a href="#" class="hover:text-white transition">
+                  <a href="#" className="hover:text-white transition">
                     Về chúng tôi
                   </a>
                 </li>
                 <li>
-                  <a href="#" class="hover:text-white transition">
+                  <a href="#" className="hover:text-white transition">
                     Liên hệ
                   </a>
                 </li>
@@ -159,22 +162,22 @@ function Cart() {
             </div>
 
             <div>
-              <h4 class="font-bold text-sm uppercase tracking-widest mb-6">
+              <h4 className="font-bold text-sm uppercase tracking-widest mb-6">
                 Chính sách
               </h4>
-              <ul class="space-y-3 text-gray-400 text-sm">
+              <ul className="space-y-3 text-gray-400 text-sm">
                 <li>
-                  <a href="#" class="hover:text-white transition">
+                  <a href="#" className="hover:text-white transition">
                     Chính sách đổi trả
                   </a>
                 </li>
                 <li>
-                  <a href="#" class="hover:text-white transition">
+                  <a href="#" className="hover:text-white transition">
                     Chính sách bảo mật
                   </a>
                 </li>
                 <li>
-                  <a href="#" class="hover:text-white transition">
+                  <a href="#" className="hover:text-white transition">
                     Điều khoản dịch vụ
                   </a>
                 </li>
@@ -182,29 +185,38 @@ function Cart() {
             </div>
 
             <div>
-              <h4 class="font-bold text-sm uppercase tracking-widest mb-6">
+              <h4 className="font-bold text-sm uppercase tracking-widest mb-6">
                 Liên hệ
               </h4>
-              <div class="text-gray-400 text-sm space-y-3 mb-6">
+              <div className="text-gray-400 text-sm space-y-3 mb-6">
                 <p>Email: contact@fashion.vn</p>
                 <p>Hotline: 1900 xxxx</p>
               </div>
-              <div class="flex gap-4">
-                <a href="#" class="text-gray-400 hover:text-white transition">
+              <div className="flex gap-4">
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition"
+                >
                   <FaFacebook size={30} />
                 </a>
-                <a href="#" class="text-gray-400 hover:text-white transition">
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition"
+                >
                   <FaInstagram size={30} />
                 </a>
-                <a href="#" class="text-gray-400 hover:text-white transition">
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition"
+                >
                   <FaTwitter size={30} />
                 </a>
               </div>
             </div>
           </div>
 
-          <div class="border-t border-gray-800 pt-8">
-            <p class="text-center text-gray-500 text-xs">
+          <div className="border-t border-gray-800 pt-8">
+            <p className="text-center text-gray-500 text-xs">
               &copy; 2026 FASHION. All rights reserved.
             </p>
           </div>

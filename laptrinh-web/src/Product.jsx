@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ProductContext } from "./ProductContext";
 import { useCart } from "./CartContext";
 // button
@@ -12,12 +12,58 @@ import { Link } from "react-router-dom";
 function Product() {
   const { products } = useContext(ProductContext);
   const { addToCart } = useCart();
+  // filter
+  const [filters, setFilters] = useState({
+    category: "all",
+    price: "all",
+  });
+
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilters((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // bỏ chữ đ và dấu chấm
+  const parsePrice = (priceStr) => {
+    return parseInt(priceStr.replace(/\./g, "").replace("đ", ""));
+  };
+  const filteredProducts = products.filter((product) => {
+    // Lọc theo danh mục
+    const categoryMatch =
+      filters.category === "all" || product.category === filters.category;
+
+    // Lọc theo khoảng giá
+    const price = parsePrice(product.price);
+    let priceMatch = false;
+
+    switch (filters.price) {
+      case "under500":
+        priceMatch = price < 500000;
+        break;
+      case "500-1000":
+        priceMatch = price >= 500000 && price <= 1000000;
+        break;
+      case "over1000":
+        priceMatch = price > 1000000;
+        break;
+      default:
+        priceMatch = true;
+    }
+
+    return categoryMatch && priceMatch;
+  });
   return (
     <>
+      {/* navbar */}
       <div className="flex items-center justify-between py-5 px-50 fixed top-0 left-0 right-0 bg-white z-10">
         {/* logo */}
         <div>
-          <img src="" alt="" />
+          <h1 className="text-2xl font-black tracking-widest uppercase mb-2">
+            FASHION
+          </h1>
         </div>
         {/* items */}
         <div>
@@ -64,7 +110,8 @@ function Product() {
                   type="radio"
                   name="category"
                   value="all"
-                  checked
+                  checked={filters.category === "all"}
+                  onChange={handleFilterChange}
                   class="w-4 h-4 accent-black"
                 />
                 <span class="text-sm text-gray-700 group-hover:text-black transition">
@@ -75,7 +122,9 @@ function Product() {
                 <input
                   type="radio"
                   name="category"
-                  value="nam"
+                  value="Nam"
+                  checked={filters.category === "Nam"}
+                  onChange={handleFilterChange}
                   class="w-4 h-4 accent-black"
                 />
                 <span class="text-sm text-gray-700 group-hover:text-black transition">
@@ -86,7 +135,9 @@ function Product() {
                 <input
                   type="radio"
                   name="category"
-                  value="nu"
+                  value="Nữ"
+                  checked={filters.category === "Nữ"}
+                  onChange={handleFilterChange}
                   class="w-4 h-4 accent-black"
                 />
                 <span class="text-sm text-gray-700 group-hover:text-black transition">
@@ -97,7 +148,9 @@ function Product() {
                 <input
                   type="radio"
                   name="category"
-                  value="phukien"
+                  value="Phụ kiện"
+                  checked={filters.category === "Phụ kiện"}
+                  onChange={handleFilterChange}
                   class="w-4 h-4 accent-black"
                 />
                 <span class="text-sm text-gray-700 group-hover:text-black transition">
@@ -115,7 +168,8 @@ function Product() {
                   type="radio"
                   name="price"
                   value="all"
-                  checked
+                  checked={filters.price === "all"}
+                  onChange={handleFilterChange}
                   class="w-4 h-4 accent-black"
                 />
                 <span class="text-sm text-gray-700 group-hover:text-black transition">
@@ -127,6 +181,8 @@ function Product() {
                   type="radio"
                   name="price"
                   value="under500"
+                  checked={filters.price === "under500"}
+                  onChange={handleFilterChange}
                   class="w-4 h-4 accent-black"
                 />
                 <span class="text-sm text-gray-700 group-hover:text-black transition">
@@ -138,6 +194,8 @@ function Product() {
                   type="radio"
                   name="price"
                   value="500-1000"
+                  checked={filters.price === "500-1000"}
+                  onChange={handleFilterChange}
                   class="w-4 h-4 accent-black"
                 />
                 <span class="text-sm text-gray-700 group-hover:text-black transition">
@@ -149,6 +207,8 @@ function Product() {
                   type="radio"
                   name="price"
                   value="over1000"
+                  checked={filters.price === "over1000"}
+                  onChange={handleFilterChange}
                   class="w-4 h-4 accent-black"
                 />
                 <span class="text-sm text-gray-700 group-hover:text-black transition">
@@ -159,7 +219,7 @@ function Product() {
           </div>
 
           <button
-            id="btn-clear-filter"
+            onClick={() => setFilters({ category: "all", price: "all" })}
             class="w-full py-2.5 border-2 border-black font-bold text-sm uppercase rounded-lg hover:bg-black hover:text-white transition-all duration-300 active:scale-95"
           >
             Xóa bộ lọc
@@ -170,18 +230,20 @@ function Product() {
 
           {/* items */}
           <div className="grid grid-cols-4 gap-5 ">
-            {products.map((product) => (
+            {filteredProducts.map((product) => (
               <div key={product.id} className="group relative">
+                {product.discount && (
                 <span className="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-full">
-                  {product.discount ? product.discount : "Mới"}
-                </span>
+                  {product.discount}
+                </span>)}
+
                 <img
                   src={product.image}
                   alt={product.name}
                   className="object-cover w-75 h-80 rounded-2xl hover:scale-105 transition-transform duration-300"
                 />
                 <p className="font-bold my-1">{product.name}</p>
-                <p className="font-bold">{product.price}</p>
+                <p className="font-bold">{product.price}đ</p>
                 <div>
                   <Button
                     onClick={() => addToCart(product)}
@@ -197,36 +259,36 @@ function Product() {
           </div>
         </div>
       </div>
-      <footer class="bg-black text-white pt-16 pb-8">
-        <div class="max-w-7xl mx-auto px-4">
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+      <footer className="bg-black text-white pt-16 pb-8">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
             <div>
-              <h4 class="font-bold text-sm uppercase tracking-widest mb-6">
+              <h4 className="font-bold text-sm uppercase tracking-widest mb-6">
                 FASHION
               </h4>
-              <p class="text-gray-400 text-sm leading-relaxed max-w-xs">
+              <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
                 Shop thời trang uy tín hàng đầu Việt Nam. Chất lượng - Phong
                 cách - Giá tốt.
               </p>
             </div>
 
             <div>
-              <h4 class="font-bold text-sm uppercase tracking-widest mb-6">
+              <h4 className="font-bold text-sm uppercase tracking-widest mb-6">
                 Liên kết
               </h4>
-              <ul class="space-y-3 text-gray-400 text-sm">
+              <ul className="space-y-3 text-gray-400 text-sm">
                 <li>
-                  <a href="#" class="hover:text-white transition">
+                  <a href="#" className="hover:text-white transition">
                     Sản phẩm
                   </a>
                 </li>
                 <li>
-                  <a href="#" class="hover:text-white transition">
+                  <a href="#" className="hover:text-white transition">
                     Về chúng tôi
                   </a>
                 </li>
                 <li>
-                  <a href="#" class="hover:text-white transition">
+                  <a href="#" className="hover:text-white transition">
                     Liên hệ
                   </a>
                 </li>
@@ -234,22 +296,22 @@ function Product() {
             </div>
 
             <div>
-              <h4 class="font-bold text-sm uppercase tracking-widest mb-6">
+              <h4 className="font-bold text-sm uppercase tracking-widest mb-6">
                 Chính sách
               </h4>
-              <ul class="space-y-3 text-gray-400 text-sm">
+              <ul className="space-y-3 text-gray-400 text-sm">
                 <li>
-                  <a href="#" class="hover:text-white transition">
+                  <a href="#" className="hover:text-white transition">
                     Chính sách đổi trả
                   </a>
                 </li>
                 <li>
-                  <a href="#" class="hover:text-white transition">
+                  <a href="#" className="hover:text-white transition">
                     Chính sách bảo mật
                   </a>
                 </li>
                 <li>
-                  <a href="#" class="hover:text-white transition">
+                  <a href="#" className="hover:text-white transition">
                     Điều khoản dịch vụ
                   </a>
                 </li>
@@ -257,29 +319,38 @@ function Product() {
             </div>
 
             <div>
-              <h4 class="font-bold text-sm uppercase tracking-widest mb-6">
+              <h4 className="font-bold text-sm uppercase tracking-widest mb-6">
                 Liên hệ
               </h4>
-              <div class="text-gray-400 text-sm space-y-3 mb-6">
+              <div className="text-gray-400 text-sm space-y-3 mb-6">
                 <p>Email: contact@fashion.vn</p>
                 <p>Hotline: 1900 xxxx</p>
               </div>
-              <div class="flex gap-4">
-                <a href="#" class="text-gray-400 hover:text-white transition">
+              <div className="flex gap-4">
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition"
+                >
                   <FaFacebook size={30} />
                 </a>
-                <a href="#" class="text-gray-400 hover:text-white transition">
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition"
+                >
                   <FaInstagram size={30} />
                 </a>
-                <a href="#" class="text-gray-400 hover:text-white transition">
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition"
+                >
                   <FaTwitter size={30} />
                 </a>
               </div>
             </div>
           </div>
 
-          <div class="border-t border-gray-800 pt-8">
-            <p class="text-center text-gray-500 text-xs">
+          <div className="border-t border-gray-800 pt-8">
+            <p className="text-center text-gray-500 text-xs">
               &copy; 2026 FASHION. All rights reserved.
             </p>
           </div>
