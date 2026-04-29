@@ -99,7 +99,7 @@ function Product() {
       </div>
 
       <div className="flex gap-1 mt-20 px-30">
-        <aside class="w-64 p-6 bg-white border-r border-gray-100 min-h-screen">
+        <div class="w-64 p-6 bg-white border-r border-gray-100 min-h-screen">
           <div class="mb-8">
             <h3 class="flex items-center gap-2 font-bold text-lg mb-4">
               Danh mục
@@ -224,7 +224,7 @@ function Product() {
           >
             Xóa bộ lọc
           </button>
-        </aside>
+        </div>
         <div>
           <p className="font-bold text-3xl mb-4">Sản phẩm</p>
 

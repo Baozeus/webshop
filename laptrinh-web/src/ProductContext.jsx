@@ -8,7 +8,7 @@ export const ProductProvider = ({ children }) => {
 
   // Hàm lấy dữ liệu từ PHP khi trang vừa load
   const fetchProducts = async () => {
-    const response = await fetch("http://localhost/shop-api/api.php");
+    const response = await fetch("http://localhost/shop-api/api.php?action=get_products");
     const data = await response.json();
     setProducts(data);
   };

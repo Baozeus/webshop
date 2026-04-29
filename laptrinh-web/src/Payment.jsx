@@ -62,20 +62,26 @@ function Payment() {
         total_amount: subtotal + shipping,
         items: cartItems.map((item) => ({
           id: item.id,
-          quantity: item.quantity,
+          quantity: item.qty,
           price: item.price,
         })),
       }),
     });
 
-    const data = await response.json();
-    if (data.status === "success") {
-      localStorage.removeItem("cart");
-      clearCart();
+    const text = await response.text();
+
+    try {
+      const data = JSON.parse(text);
+      if (data.status === "success") {
+        localStorage.removeItem("cart");
+        if (typeof clearCart === "function") clearCart();
+        window.location.href = "/Home";
+      } else {
+        console.error("Lỗi từ server:", data.message);
+      }
+    } catch (err) {
+      console.error(text);
       window.location.href = "/Home";
-      alert("Đặt hàng thành công! Mã đơn hàng: " + data.order_id);
-    } else {
-      alert("Lỗi: " + data.message);
     }
   };
   return (

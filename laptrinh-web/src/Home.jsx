@@ -60,7 +60,7 @@ function Home() {
           <Link to="/Cart">
             <FaCartShopping size={22} />
           </Link>
-            <IoMdPerson size={22} />
+          <IoMdPerson size={22} />
         </div>
       </div>
 
@@ -79,8 +79,10 @@ function Home() {
           </p>
           <div className="flex gap-3">
             <button className="bg-black px-10 py-3 text-white flex items-center gap-2 flex-col rounded-md">
-              Mua ngay
-              <FaArrowRight />
+              <Link to="/Product">
+                Mua ngay
+                <FaArrowRight />
+              </Link>
             </button>
             <button className="bg-white flex items-center justify-center px-11 py-3 text-black rounded-md">
               Khám phá
@@ -123,9 +125,11 @@ function Home() {
         <div className="max-w-300 mx-auto grid grid-cols-4 gap-5 ">
           {products.map((product) => (
             <div key={product.id} className="group relative">
-              <span className="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-full">
-                {product.discount ? product.discount : "Mới"}
-              </span>
+              {product.discount && (
+                <span className="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-full">
+                  {product.discount}
+                </span>
+              )}
               <img
                 src={product.image}
                 alt={product.name}
